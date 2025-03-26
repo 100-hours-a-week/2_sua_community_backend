@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PostSaveReqdto {
 //사용자가 요청하는 값
-    Long user_id;
+    Long userId;
     String title;
     String content;
     String image_url;

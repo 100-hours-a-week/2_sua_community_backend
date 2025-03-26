@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 
 import java.time.LocalDateTime;
@@ -14,6 +15,8 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @Getter
+@EntityListeners(AuditingEntityListener.class)
+
 
 public class Posts {
     @Id
@@ -27,24 +30,27 @@ public class Posts {
     private String content;
 
     @Column(nullable = false)
-    private int views;
+    private int views = 0;
 
     @Column(nullable = false)
-    private int likes;
+    private int likes = 0;
 
     @Column(nullable = false)
-    private int comments;
+    private int comments = 0;
 
     @LastModifiedDate
     @Column(nullable = false)
-    private LocalDateTime UpdateAt;
+    private LocalDateTime updateAt;
 
     @CreatedDate
-    //처음에는 저장을하고 그 후엔 하지 않겠다.
-    @Column(nullable = false,updatable = false)
-    private LocalDateTime CreateAt;
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createAt;
 
     @Column
     private LocalDateTime DeleteAt;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
 }
