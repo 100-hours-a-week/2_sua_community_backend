@@ -19,6 +19,11 @@ public class AuthService {
         Member member = memberRepository.findByEmail(dto.getEmail())
                 .orElseThrow(() -> new RuntimeException("해당 회원이 존재하지 않습니다."));
 
+        //비밀번호 검증 로직 추가
+        if(!member.getPassword().equals(dto.getPassword())) {
+            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+        }
+
         // 인증 성공 시 회원 ID 반환
         return new LonginResponsedto(member.getId());
     }
